@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>G-ZONE ESPORTS</title>
+    
+    <!-- PWA MANIFEST -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- PROFESSIONAL THEME VARIABLES --- */
+        :root { --bg-dark: #0f172a; --bg-card: #1e293b; --primary: #06b6d4; --primary-glow: rgba(6, 182, 212, 0.4); --secondary: #6366f1; --accent: #ec4899; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --glass-bg: rgba(30, 41, 59, 0.7); --glass-border: rgba(255, 255, 255, 0.08); --text-main: #f8fafc; --text-muted: #94a3b8; --font-main: 'Outfit', sans-serif; --font-bn: 'Hind Siliguri', sans-serif; --font-gaming: 'Rajdhani', sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; outline: none; user-select: none; }
+        body { background-color: var(--bg-dark); background-image: radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%); background-attachment: fixed; color: var(--text-main); font-family: var(--font-bn); min-height: 100vh; overflow-x: hidden; padding-bottom: 30px; }
+        .hidden { display: none !important; }
+        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .btn { width: 100%; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: transform 0.1s, opacity 0.2s; font-family: var(--font-bn); } .btn:active { transform: scale(0.98); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; box-shadow: 0 4px 15px var(--primary-glow); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid var(--glass-border); } .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
+        .btn-success { background: var(--success); color: #fff; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); } .btn-danger { background: var(--danger); color: #fff; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3); }
+        .input-group { position: relative; margin-bottom: 15px; } .input-group i { position: absolute; top: 50%; left: 16px; transform: translateY(-50%); color: var(--primary); font-size: 1.1rem; z-index: 2; } .input-group input { width: 100%; padding: 14px 14px 14px 45px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--glass-border); border-radius: 12px; color: #fff; font-size: 1rem; transition: border-color 0.3s; font-family: var(--font-bn); } .input-group input:focus { border-color: var(--primary); background: rgba(15, 23, 42, 0.9); }
+        header { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); padding: 0 16px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--glass-border); height: 65px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+        .header-left { display: flex; align-items: center; gap: 15px; } .logo { font-family: var(--font-gaming); font-size: 1.5rem; font-weight: 700; color: #fff; letter-spacing: 1px; } .logo span { color: var(--primary); }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .nav-balance { background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3); padding: 6px 14px; border-radius: 50px; display: flex; align-items: center; gap: 8px; cursor: pointer; } .nav-balance span { font-family: var(--font-gaming); font-weight: 700; color: var(--primary); font-size: 1.05rem; } .nav-balance i { color: var(--primary); font-size: 0.9rem; }
+        .notif-icon-box { position: relative; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); border-radius: 10px; cursor: pointer; border: 1px solid var(--glass-border); } .notification-dot { position: absolute; top: 8px; right: 8px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; display: none; }
+        .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 998; display: none; } .drawer { position: fixed; top: 0; left: 0; width: 280px; height: 100%; background: #0f172a; z-index: 999; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); border-right: 1px solid var(--glass-border); display: flex; flex-direction: column; box-shadow: 10px 0 40px rgba(0,0,0,0.5); } .drawer.open { transform: translateX(0); }
+        .drawer-header { padding: 25px 20px; background: linear-gradient(to bottom, #1e293b, #0f172a); border-bottom: 1px solid var(--glass-border); display: flex; align-items: center; gap: 15px; flex-shrink: 0; } .d-user-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); background: #1e293b; } .d-user-info h3 { color: #fff; font-size: 1.1rem; margin: 0; font-family: var(--font-gaming); letter-spacing: 0.5px; } .d-user-info span { color: var(--text-muted); font-size: 0.8rem; font-family: monospace; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px; }
+        .drawer-items { padding: 15px 15px 80px 15px; flex: 1; overflow-y: auto; background: linear-gradient(#0f172a 30%, rgba(15,23,42,0)), linear-gradient(rgba(15,23,42,0), #0f172a 70%) 0 100%, radial-gradient(farthest-side at 50% 0, rgba(0,0,0,.4), rgba(0,0,0,0)), radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,.4), rgba(0,0,0,0)) 0 100%; background-repeat: no-repeat; background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px; background-attachment: local, local, scroll, scroll; }
+        .menu-group-label { font-size: 0.75rem; color: var(--primary); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin: 20px 0 8px 10px; opacity: 0.8; } .menu-group-label:first-child { margin-top: 5px; }
+        .d-item { padding: 12px 16px; margin-bottom: 4px; border-radius: 8px; color: var(--text-muted); font-size: 0.95rem; font-weight: 500; display: flex; align-items: center; gap: 15px; transition: all 0.2s; cursor: pointer; border: 1px solid transparent; } .d-item:hover { background: rgba(255,255,255,0.03); color: #fff; } .d-item:active { transform: scale(0.98); } .d-item i { width: 22px; text-align: center; color: var(--text-muted); transition: 0.2s; } .d-item:hover i { color: var(--primary); }
+        .drawer-footer { padding: 20px; border-top: 1px solid var(--glass-border); background: #0f172a; flex-shrink: 0; } .btn-logout { width: 100%; padding: 12px; background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; font-weight: 600; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s; } .btn-logout:hover { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); }
+        
+        .page-section { display: none; padding-top: 15px; animation: fadeIn 0.3s ease-out; } .page-section.active { display: block; } @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 15px 16px; } .q-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 16px; border-radius: 14px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 10px; color: var(--text-main); font-weight: 600; font-size: 0.95rem; transition: 0.2s; } .q-btn:active { background: rgba(255,255,255,0.06); transform: scale(0.98); } .q-add i { color: var(--success); } .q-wd i { color: var(--warning); }
+        #banner-slider { display: flex; gap: 12px; overflow-x: auto; margin: 0 16px 25px; scroll-snap-type: x mandatory; padding-bottom: 5px; scroll-behavior: smooth; } .slide { flex: 0 0 100%; width: 100%; height: 160px; border-radius: 16px; object-fit: cover; scroll-snap-align: center; border: 1px solid var(--glass-border); background: #1e293b; }
+        .section-header { display: flex; align-items: center; gap: 8px; margin: 0 16px 12px; font-size: 1.1rem; font-weight: 700; color: var(--text-main); letter-spacing: 0.5px; } .section-header i { color: var(--primary); }
+        .home-tabs { display: flex; margin: 0 16px 16px; background: rgba(0,0,0,0.2); padding: 4px; border-radius: 12px; border: 1px solid var(--glass-border); } .home-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; color: var(--text-muted); border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: 0.3s; } .home-tab.active { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        .t-card { background: var(--bg-card); border: 1px solid var(--glass-border); margin: 0 16px 20px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; } .t-img-wrap { position: relative; height: 150px; overflow: hidden; } .t-img { width: 100%; height: 100%; object-fit: cover; } .t-type-badge { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; border: 1px solid var(--primary); backdrop-filter: blur(4px); } .t-overlay { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, #1e293b, transparent); padding: 30px 15px 10px; } .t-title { color: #fff; font-size: 1.15rem; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-family: var(--font-bn); }
+        .t-body { padding: 15px; } .t-stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 10px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.03); } .t-stat { text-align: center; } .t-stat small { display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; } .t-stat b { display: block; font-size: 1rem; color: var(--primary); font-family: var(--font-gaming); font-weight: 600; }
+        .progress-bar { height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-bottom: 15px; overflow: hidden; } .progress-fill { height: 100%; background: var(--success); border-radius: 3px; } .t-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: 0.2s; } .modal:not(.hidden) { opacity: 1; pointer-events: auto; } .modal-content { background: #1e293b; width: 90%; max-width: 380px; padding: 25px; border-radius: 20px; position: relative; border: 1px solid var(--glass-border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: scale(0.95); transition: 0.2s; } .modal:not(.hidden) .modal-content { transform: scale(1); }
+        .cred-panel { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 15px; margin-top: 15px; } .cred-box { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; } .cred-value { font-family: monospace; font-size: 1.1rem; letter-spacing: 1px; color: #fff; }
+        .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; } .method-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; } .method-card:active { transform: scale(0.98); } .method-card.active { border-color: var(--primary); background: rgba(6, 182, 212, 0.05); } .method-card img { width: 40px; height: 40px; object-fit: contain; } .m-name { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); } .method-card.active .m-name { color: #fff; } .method-card input { display: none; }
+        .rank-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(255,255,255,0.02); border-radius: 10px; margin-bottom: 8px; border: 1px solid var(--glass-border); } .rank-pos { font-family: var(--font-gaming); font-weight: 700; font-size: 1.1rem; width: 30px; color: var(--text-muted); } .rank-item.top-1 { border-color: rgba(255, 215, 0, 0.3); background: rgba(255, 215, 0, 0.05); } .rank-item.top-2 { border-color: rgba(192, 192, 192, 0.3); background: rgba(192, 192, 192, 0.05); } .rank-item.top-3 { border-color: rgba(205, 127, 50, 0.3); background: rgba(205, 127, 50, 0.05); }
+        #toast-box { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1e293b; border: 1px solid var(--glass-border); color: #fff; padding: 12px 20px; border-radius: 30px; z-index: 10000; display: none; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); font-size: 0.9rem; white-space: nowrap; } #toast-box.show { display: flex; animation: fadeUp 0.3s ease; }
+        #auth-container { background: #0f172a; } .profile-img-container { width: 100px; height: 100px; margin: 0 auto 15px; position: relative; } .profile-pic { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); padding: 2px; background: #1e293b; }
+        
+        /* ✅ PROFESSIONAL LOADING SCREEN */
+        #loading-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #0f172a; z-index: 9999; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            transition: opacity 0.5s ease-out;
+        }
+        .loader-logo-wrap { position: relative; width: 80px; height: 80px; margin-bottom: 20px; }
+        /* ✅ UPDATED IMAGE LINK */
+        .loader-logo-img { width: 100%; height: 100%; object-fit: contain; animation: logoPulse 2s infinite ease-in-out; }
+        .loader-bar-bg { width: 160px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+        .loader-bar-fill { height: 100%; background: var(--primary); width: 0%; animation: loadProgress 2s ease-in-out infinite; }
+        @keyframes logoPulse { 0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.3)); } 50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.6)); } 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(6, 182, 212, 0.3)); } }
+        @keyframes loadProgress { 0% { width: 0%; transform: translateX(-100%); } 50% { width: 100%; transform: translateX(0); } 100% { width: 0%; transform: translateX(100%); } }
+
+        /* ✅ PWA NOTIFICATION BANNER */
+        #notification-banner {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(30, 41, 59, 0.95); border-top: 1px solid var(--primary);
+            padding: 15px; z-index: 9999; text-align: center;
+            backdrop-filter: blur(10px); box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .notif-text { color: #fff; margin-bottom: 10px; font-size: 0.9rem; font-weight: bold; }
+
+        /* ✅ DOWNLOAD SITE STYLES (BROWSER MODE) */
+        #install-view { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #0f172a; z-index: 10001; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            padding: 20px; text-align: center;
+            background-image: radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 60%);
+        }
+        /* ✅ UPDATED IMAGE LINK */
+        .install-logo { width: 100px; height: 100px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3); }
+        .install-title { font-family: var(--font-gaming); font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: 2px; }
+        .install-desc { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; max-width: 320px; line-height: 1.6; font-family: var(--font-bn); }
+        .btn-install { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; font-weight: 800; 
+            padding: 16px 40px; border-radius: 50px; font-size: 1.1rem; 
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
+            animation: pulseBtn 2s infinite; border: none; cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            font-family: var(--font-main);
+        }
+        @keyframes pulseBtn { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(6, 182, 212, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); } }
+        .install-footer { position: absolute; bottom: 30px; color: var(--text-muted); font-size: 0.8rem; opacity: 0.7; }
+
+        /* ✅ DIGITAL SPIN WHEEL CSS */
+        .wheel-container { position: relative; width: 300px; height: 300px; margin: 0 auto; max-width: 100%; border-radius: 50%; box-shadow: 0 0 30px rgba(6, 182, 212, 0.2); }
+        .digital-marker {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 30px; height: 40px; background: var(--warning);
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 20; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+        }
+        .digital-wheel {
+            width: 100%; height: 100%; border-radius: 50%;
+            border: 8px solid #1e293b;
+            background: conic-gradient(
+                #ef4444 0deg 90deg, 
+                #3b82f6 90deg 180deg, 
+                #10b981 180deg 270deg, 
+                #a855f7 270deg 360deg
+            );
+            position: relative;
+            transition: transform 5s cubic-bezier(0.1, 0.7, 0.1, 1);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+        }
+        .segment-text {
+            position: absolute; top: 50%; left: 50%;
+            transform-origin: 0 0;
+            color: #fff; font-weight: 800; font-family: var(--font-bn); text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-size: 1.1rem;
+        }
+        .s1 { transform: rotate(45deg) translate(60px) rotate(-45deg); }
+        .s2 { transform: rotate(135deg) translate(60px) rotate(-135deg); }
+        .s3 { transform: rotate(225deg) translate(60px) rotate(-225deg); }
+        .s4 { transform: rotate(315deg) translate(60px) rotate(-315deg); }
+        
+        .wheel-center-knob {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 50px; height: 50px; background: #1e293b; border: 4px solid var(--primary);
+            border-radius: 50%; z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        .wheel-center-knob i { color: var(--primary); font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    
+    <!-- ✅ DOWNLOAD APP / LANDING PAGE VIEW -->
+    <div id="install-view" class="hidden">
+        <img src="https://cdn-icons-png.flaticon.com/512/11482/11482650.png" class="install-logo">
+        <div class="install-title">G-ZONE</div>
+        <p class="install-desc">G-ZONE ইস্পোর্টস এ আপনাকে স্বাগতম! ফ্রি ফায়ার টুর্নামেন্ট খেলে টাকা ইনকাম করতে আমাদের অ্যাপটি ইন্সটল করুন।</p>
+        <button id="btn-install-app" class="btn-install"><i class="fas fa-download"></i> INSTALL APP</button>
+        <div class="install-footer">Secure & Verified • Version 2.2</div>
+    </div>
+
+    <!-- ✅ PROFESSIONAL LOADING SCREEN -->
+    <div id="loading-overlay">
+        <div class="loader-logo-wrap">
+            <img src="https://cdn-icons-png.flaticon.com/512/11482/11482650.png" class="loader-logo-img">
+        </div>
+        <div class="loader-bar-bg">
+            <div class="loader-bar-fill"></div>
+        </div>
+    </div>
+
+    <div id="toast-box"><i class="fas fa-info-circle" style="color:var(--primary)"></i> <span id="toast-msg"></span></div>
+
+    <!-- NOTIFICATION PERMISSION BANNER -->
+    <div id="notification-banner">
+        <div class="notif-text">🔔 আপডেট পেতে নোটিফিকেশন চালু করুন!</div>
+        <button class="btn btn-primary" onclick="enableNotifications()">Enable Notifications</button>
+    </div>
+
+    <!-- AUTH SCREEN -->
+    <div id="auth-container" class="hidden" style="display:flex;flex-direction:column;justify-content:center;padding:30px;min-height:100vh;text-align:center;">
+        <h1 class="logo" style="font-size:3rem; margin-bottom:10px;">G-ZONE <span>ESPORTS</span></h1>
+        <p style="color:var(--text-muted); margin-bottom:30px;">Play & Earn Money</p>
+        
+        <div id="login-form">
+            <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="l-email" placeholder="ইমেইল"></div>
+            <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="l-pass" placeholder="পাসওয়ার্ড"></div>
+            <button class="btn btn-primary" onclick="login()">লগইন করুন</button>
+            <p style="margin-top:20px;color:var(--text-muted);cursor:pointer;font-size:0.9rem;" onclick="toggleAuth()">নতুন একাউন্ট খুলুন</p>
+        </div>
+
+        <div id="signup-form" class="hidden">
+            <div class="input-group"><i class="fas fa-user"></i><input type="text" id="r-user" placeholder="পুরো নাম (Full Name)"></div>
+            <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="r-email" placeholder="ইমেইল"></div>
+            <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="r-pass" placeholder="পাসওয়ার্ড"></div>
+            <div class="input-group"><i class="fas fa-gift"></i><input type="text" id="r-refer" placeholder="রেফার কোড (Optional)"></div>
+            <button class="btn btn-primary" onclick="register()">রেজিস্ট্রেশন</button>
+            <p style="margin-top:20px;color:var(--text-muted);cursor:pointer;font-size:0.9rem;" onclick="toggleAuth()">লগইন করুন</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP INTERFACE -->
+    <div id="app-container" class="hidden">
+        
+        <!-- HEADER -->
+        <header>
+            <div class="header-left">
+                <i class="fas fa-bars fa-lg" onclick="toggleDrawer()" style="cursor:pointer; color:#fff;"></i>
+                <div class="logo">G-ZONE</div>
+            </div>
+            
+            <div class="header-right">
+                <div class="nav-balance" onclick="nav('page-withdraw')">
+                    <i class="fas fa-wallet"></i>
+                    <span>৳<span id="header-bal">0</span></span>
+                </div>
+                
+                <div class="notif-icon-box" onclick="openNotifications()">
+                    <i class="far fa-bell" style="color:#fff;"></i>
+                    <div id="header-badge" class="notification-dot"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE: HOME -->
+        <div id="page-home" class="page-section active">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="q-btn q-add" onclick="nav('page-add-money')"><i class="fas fa-plus-circle"></i> এড মানি</div>
+                <div class="q-btn q-wd" onclick="nav('page-withdraw')"><i class="fas fa-arrow-circle-down"></i> উইথড্র</div>
+            </div>
+
+            <!-- Banner Slider -->
+            <div id="banner-slider"></div>
+
+            <!-- Tournament Section -->
+            <div class="section-header"><i class="fas fa-fire"></i> চলমান টুর্নামেন্ট</div>
+            
+            <div class="home-tabs">
+                <div class="home-tab active" id="ht-BR" onclick="switchHomeTab('BR')">Battle Royale</div>
+                <div class="home-tab" id="ht-CS" onclick="switchHomeTab('CS')">Clash Squad</div>
+            </div>
+
+            <div id="tournament-list"></div>
+        </div>
+
+        <!-- PAGE: LEADERBOARD -->
+        <div id="page-leaderboard" class="page-section">
+            <div class="section-header"><i class="fas fa-crown"></i> সেরা ১০ ধনী</div>
+            <div class="t-card"><div class="t-body"><div id="balance-leaderboard"></div></div></div>
+        </div>
+
+        <!-- PAGE: REFER -->
+        <div id="page-refer" class="page-section">
+            <div class="section-header"><i class="fas fa-user-plus"></i> রেফার করুন</div>
+            <div class="t-card">
+                <div class="t-body" style="text-align:center;">
+                    <p style="color:var(--text-muted); font-size:0.9rem;">আপনার রেফার কোড</p>
+                    <div class="cred-panel" style="margin:15px 0;">
+                        <div class="cred-box" style="justify-content:center; gap:15px; border:none; background:transparent; padding:0;">
+                            <span id="my-refer-code" class="cred-value" style="font-size:1.8rem; color:var(--success);">...</span>
+                            <i class="fas fa-copy" onclick="copyReferCode()" style="cursor:pointer; color:var(--text-muted)"></i>
+                        </div>
+                    </div>
+                    <p style="font-size:0.9rem; color:#aaa; margin-bottom:20px; line-height:1.5;">বন্ধুদের ইনভাইট করুন। তারা যখন প্রথম সোলো ম্যাচে জয়েন করবে, আপনি পাবেন <span style="color:var(--success)">৳5</span> বোনাস!</p>
+                    <div style="display:flex; justify-content:space-between; background:rgba(0,0,0,0.2); padding:15px; border-radius:12px; border:1px solid var(--glass-border);">
+                        <div><small style="color:var(--text-muted)">মোট রেফার</small><h3 id="total-refers" style="color:#fff;">0</h3></div>
+                        <div style="text-align:right;"><small style="color:var(--text-muted)">মোট আয়</small><h3 id="total-refer-earn" style="color:var(--success);">৳0</h3></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-header"><i class="fas fa-medal"></i> টপ রেফারার</div>
+            <div id="referral-leaderboard" style="margin: 0 16px 20px;"></div>
+        </div>
+
+        <!-- PAGE: SPIN (DIGITAL & BENGALI & RIGGED) -->
+        <div id="page-spin" class="page-section">
+            <div class="section-header"><i class="fas fa-dharmachakra"></i> লাকি স্পিন</div>
+            <div class="t-card">
+                <div class="t-body" style="text-align:center; padding: 30px 10px;">
+                    
+                    <div class="wheel-container">
+                        <div class="digital-marker"></div> <!-- Arrow pointer -->
+                        <div id="spin-wheel" class="digital-wheel">
+                            <span class="segment-text s1">লস</span>
+                            <span class="segment-text s2">২ গুণ</span>
+                            <span class="segment-text s3">৩ গুণ</span>
+                            <span class="segment-text s4">৫ গুণ</span>
+                        </div>
+                        <div class="wheel-center-knob"><i class="fas fa-gem"></i></div>
+                    </div>
+                    
+                    <div class="caution-box">
+                        <i class="fas fa-exclamation-circle"></i> <b>সতর্কবার্তা</b><br>
+                        স্পিনে টাকা হারানো গেলে কর্তৃপক্ষ দায়ী থাকবে না। নিজ দায়িত্বে খেলুন।
+                    </div>
+                    <div class="input-group" style="margin-top:20px;">
+                        <i class="fas fa-coins"></i>
+                        <input type="number" id="spin-amt" placeholder="টাকার পরিমাণ লিখুন">
+                    </div>
+                    <button class="btn btn-primary" id="spin-btn" onclick="spinWheel()">স্পিন করুন</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: MATCHES -->
+        <div id="page-matches" class="page-section">
+            <div class="section-header"><i class="fas fa-gamepad"></i> আমার ম্যাচ</div>
+            <div id="my-matches-list"></div>
+        </div>
+
+        <!-- PAGE: PROFILE -->
+        <div id="page-profile" class="page-section">
+            <div class="section-header"><i class="fas fa-user-circle"></i> প্রোফাইল</div>
+            <div class="t-card">
+                <div class="t-body" style="text-align:center; padding:30px 20px;">
+                    <div class="profile-img-container"><img id="p-pic" src="" class="profile-pic" onerror="this.src='https://via.placeholder.com/100'"></div>
+                    <h2 style="color:#fff; margin-bottom:5px; font-size:1.4rem;"><span id="p-name">...</span></h2>
+                    
+                    <div style="background:rgba(0,0,0,0.3); padding:8px 15px; border-radius:20px; display:inline-flex; align-items:center; gap:10px; margin:10px 0; border:1px solid var(--glass-border);">
+                        <span style="color:#aaa; font-size:0.85rem;">UID:</span>
+                        <span id="p-custom-id" style="font-family:monospace; font-weight:bold; letter-spacing:1px; color:var(--primary);">...</span>
+                        <i class="fas fa-copy" onclick="copyCustomId()" style="cursor:pointer; color:var(--text-muted);"></i>
+                    </div>
+
+                    <div style="margin-top:30px; text-align:left;">
+                        <label style="font-size:0.85rem; color:var(--text-muted); margin-bottom:5px; display:block;">প্রোফাইল ছবি পরিবর্তন</label>
+                        <div class="input-group" style="margin-bottom:10px;"><i class="fas fa-link"></i><input type="text" id="new-pic-url" placeholder="ছবির URL লিঙ্ক"></div>
+                        <button class="btn btn-secondary" onclick="updateProfilePic()">আপডেট করুন</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: TRANSFER -->
+        <div id="page-transfer" class="page-section">
+            <div class="section-header"><i class="fas fa-exchange-alt"></i> টাকা ট্রান্সফার</div>
+            <div class="t-card">
+                <div class="t-body">
+                    <p style="color:var(--text-muted); margin-bottom:15px; font-size:0.9rem;">অন্য ইউজারকে টাকা পাঠান:</p>
+                    <div class="input-group"><i class="fas fa-id-card"></i><input type="number" id="tf-id" placeholder="রিসিভারের ইউজার আইডি (১১ সংখ্যা)"></div>
+                    <div class="input-group"><i class="fas fa-coins"></i><input type="number" id="tf-amount" placeholder="টাকার পরিমাণ"></div>
+                    <button class="btn btn-primary" id="btn-transfer" onclick="sendMoney()">টাকা পাঠান</button>
+                </div>
+            </div>
+            <div style="margin:20px; font-size:0.8rem; color:#aaa; text-align:center; padding:0 20px;">
+                <i class="fas fa-info-circle"></i> ভুল আইডিতে টাকা পাঠালে ফেরত পাওয়া যাবে না। আইডি চেক করে নিন।
+            </div>
+        </div>
+
+        <!-- PAGE: WITHDRAW -->
+        <div id="page-withdraw" class="page-section">
+            <div class="section-header"><i class="fas fa-money-bill-wave"></i> উইথড্র</div>
+            <div class="t-card"><div class="t-body">
+                <p style="color:var(--text-muted); margin-bottom:10px; font-size:0.9rem;">মেথড সিলেক্ট করুন:</p>
+                <div class="method-grid">
+                    <label class="method-card" id="method-bkash" onclick="selectMethod(this)">
+                        <input type="radio" name="w_method" value="Bkash">
+                        <img src="https://raw.githubusercontent.com/Shipu/bkash-example/master/bkash_payment_logo.png" alt="Bkash">
+                        <span class="m-name">বিকাশ</span>
+                    </label>
+                    <label class="method-card" id="method-nagad" onclick="selectMethod(this)">
+                        <input type="radio" name="w_method" value="Nagad">
+                        <img src="https://download.logo.wine/logo/Nagad/Nagad-Vertical-Logo.wine.png" alt="Nagad">
+                        <span class="m-name">নগদ</span>
+                    </label>
+                    <label class="method-card" id="method-niva" onclick="selectMethod(this)">
+                        <input type="radio" name="w_method" value="Niva Coin">
+                        <i class="fas fa-coins fa-2x" style="color:#00ff9d; margin-bottom:5px;"></i>
+                        <span class="m-name">নিভা কয়েন</span>
+                    </label>
+                    <!-- PAYEER OPTION -->
+                    <label class="method-card" id="method-payeer" onclick="selectMethod(this)">
+                        <input type="radio" name="w_method" value="Payeer Dollar">
+                        <i class="fas fa-dollar-sign fa-2x" style="color:#00aaff; margin-bottom:5px;"></i>
+                        <span class="m-name">Payeer</span>
+                    </label>
+                </div>
+                
+                <!-- Calc Displays -->
+                <div id="niva-calc" style="display:none; background:rgba(0,255,157,0.1); border:1px dashed var(--success); padding:10px; border-radius:10px; margin-bottom:15px; text-align:center;">
+                    <small>রেট: <span id="niva-rate-disp">...</span></small><br>পাবেন: <b id="niva-amount" style="color:var(--success)">0</b> কয়েন
+                </div>
+                <div id="payeer-calc" style="display:none; background:rgba(0,170,255,0.1); border:1px dashed #00aaff; padding:10px; border-radius:10px; margin-bottom:15px; text-align:center;">
+                    <small>রেট: 1$ = <span id="payeer-rate-disp">...</span>৳</small><br>পাবেন: <b id="payeer-amount" style="color:#00aaff">0</b> USD
+                </div>
+                
+                <div class="input-group"><i class="fas fa-coins"></i><input type="number" id="w-amt" placeholder="টাকার পরিমাণ" oninput="calcConversion()"></div>
+                <div class="input-group"><i class="fas fa-address-card"></i><input type="text" id="w-num" placeholder="নাম্বার / ইউজার আইডি"></div>
+                <p style="text-align:center; font-size:0.8rem; color:var(--text-muted); margin-bottom:15px;">লিমিট: <span id="w-limit-text">...</span></p>
+                <button class="btn btn-primary" onclick="doWithdraw()">রিকুয়েস্ট পাঠান</button>
+            </div></div>
+            <div class="section-header"><i class="fas fa-history"></i> ইতিহাস</div>
+            <div id="withdraw-history" style="margin: 0 16px 20px;"></div>
+        </div>
+
+        <!-- PAGE: ADD MONEY -->
+        <div id="page-add-money" class="page-section">
+            <div class="section-header"><i class="fas fa-wallet"></i> অ্যাড মানি</div>
+            <div class="t-card"><div class="t-body" style="text-align:center; padding:50px 20px;">
+                <i class="fab fa-telegram fa-4x" style="color:#0088cc; margin-bottom:20px;"></i>
+                <h3 style="margin-bottom:10px;">টেলিগ্রাম সাপোর্ট</h3>
+                <p style="color:var(--text-muted); margin-bottom:25px; font-size:0.9rem;">টাকা এড করতে অ্যাডমিনের সাথে যোগাযোগ করুন।</p>
+                <a id="btn-admin-support" href="#" target="_blank" class="btn btn-primary" style="background:#0088cc;">
+                    <i class="fab fa-telegram-plane"></i> মেসেজ পাঠান
+                </a>
+            </div></div>
+        </div>
+        
+        <!-- PAGE: BROADCAST -->
+        <div id="page-broadcast" class="page-section">
+            <div class="section-header"><i class="fas fa-video"></i> লার্নিং জোন</div>
+            <div id="video-list" style="margin:0 16px;"></div>
+        </div>
+
+        <!-- PAGE: NOTIFICATION -->
+        <div id="page-notifications" class="page-section">
+            <div class="section-header"><i class="fas fa-bell"></i> নোটিফিকেশন</div>
+            <div id="n-list" style="padding-bottom:20px; margin:0 16px;"></div>
+        </div>
+
+        <!-- PAGE: COUPON -->
+        <div id="page-coupon" class="page-section">
+             <div class="section-header"><i class="fas fa-ticket-alt"></i> কুপন</div>
+             <div class="t-card"><div class="t-body">
+                <div class="input-group"><i class="fas fa-gift"></i><input type="text" id="coupon-code" placeholder="কোড লিখুন"></div>
+                <button class="btn btn-primary" onclick="redeemCoupon()">রিডিম করুন</button>
+             </div></div>
+             <h4 style="margin:25px 20px 15px; color:var(--text-main); font-size:1rem;">পাবলিক কুপন</h4>
+             <div id="public-coupons" style="margin: 0 16px;"></div>
+        </div>
+    </div>
+
+    <!-- DRAWER MENU (NEW UX) -->
+    <div class="drawer-overlay" onclick="toggleDrawer()"></div>
+    <div class="drawer">
+        
+        <!-- HEADER: Shows User Info -->
+        <div class="drawer-header">
+            <img id="d-pic" src="https://via.placeholder.com/100" class="d-user-img">
+            <div class="d-user-info">
+                <h3 id="d-name">Loading...</h3>
+                <span id="d-uid">ID: ...</span>
+            </div>
+        </div>
+
+        <!-- SCROLLABLE ITEMS -->
+        <div class="drawer-items">
+            
+            <!-- Section 1: Main -->
+            <div class="menu-group-label">Gaming Zone</div>
+            <div class="d-item" onclick="nav('page-home')"><i class="fas fa-home"></i> হোম</div>
+            <div class="d-item" onclick="nav('page-matches')"><i class="fas fa-gamepad"></i> আমার ম্যাচ</div>
+            <div class="d-item" onclick="nav('page-leaderboard')"><i class="fas fa-crown"></i> লিডারবোর্ড</div>
+
+            <!-- Section 2: Finance -->
+            <div class="menu-group-label">Finance</div>
+            <div class="d-item" onclick="nav('page-withdraw')"><i class="fas fa-wallet"></i> উইথড্র</div>
+            <div class="d-item" onclick="nav('page-add-money')"><i class="fas fa-plus-circle"></i> অ্যাড মানি</div>
+            <div class="d-item" onclick="nav('page-transfer')"><i class="fas fa-exchange-alt"></i> ট্রান্সফার</div>
+            <div class="d-item" onclick="nav('page-coupon')"><i class="fas fa-ticket-alt"></i> কুপন</div>
+
+            <!-- Section 3: Account -->
+            <div class="menu-group-label">Account & Fun</div>
+            <div class="d-item" onclick="nav('page-profile')"><i class="fas fa-user-circle"></i> প্রোফাইল</div>
+            <div class="d-item" onclick="nav('page-refer')"><i class="fas fa-user-plus"></i> রেফার</div>
+            <div id="nav-spin-item" class="d-item" onclick="nav('page-spin')"><i class="fas fa-dharmachakra"></i> স্পিন হুইল</div>
+            <div class="d-item" onclick="nav('page-broadcast')"><i class="fas fa-video"></i> লার্নিং জোন</div>
+        </div>
+
+        <!-- FOOTER: Pinned Logout -->
+        <div class="drawer-footer">
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> লগআউট
+            </button>
+        </div>
+    </div>
+
+    <!-- MODALS -->
+    <div id="modal-area" class="hidden modal"><div class="modal-content" id="modal-content"></div></div>
+    
+    <!-- JOIN MODAL -->
+    <div id="join-modal" class="hidden modal">
+        <div class="modal-content">
+            <h3 style="text-align:center; color:#fff; margin-bottom:5px;">টুর্নামেন্ট জয়েন</h3>
+            <p style="text-align:center; color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">সঠিক তথ্য দিন</p>
+            
+            <div id="squad-tabs" class="sq-tabs hidden">
+                <div class="sq-tab active" id="tab-create" onclick="switchTab('create')">স্কোয়াড কিনুন</div>
+                <div class="sq-tab" id="tab-join" onclick="switchTab('join')">টিমে জয়েন করুন</div>
+            </div>
+            
+            <div id="view-create">
+                <div style="text-align:center; margin-bottom:15px; background:rgba(0,0,0,0.2); padding:10px; border-radius:10px;">
+                    <span style="color:#aaa;">এন্ট্রি ফি:</span> <b style="color:var(--warning); font-size:1.1rem;" id="j-fee">0</b>
+                </div>
+                <div class="input-group"><i class="fas fa-gamepad"></i><input type="text" id="j-uid" placeholder="গেম ইউআইডি (UID)"></div>
+                <div id="squad-inputs" class="hidden">
+                    <div class="input-group"><i class="fas fa-users"></i><input type="text" id="j-team" placeholder="টিমের নাম"></div>
+                </div>
+                <button class="btn btn-primary" id="btn-conf" onclick="confirmJoin()">কনফার্ম ও পেমেন্ট</button>
+            </div>
+            
+            <div id="view-join" class="hidden">
+                <p style="text-align:center; color:#aaa; font-size:0.9rem; margin-bottom:10px;">লিডারের দেওয়া কোড দিন</p>
+                <div class="input-group"><i class="fas fa-key"></i><input type="text" id="m-code" placeholder="টিম কোড"></div>
+                <div class="input-group"><i class="fas fa-gamepad"></i><input type="text" id="m-uid" placeholder="আপনার গেম ইউআইডি (UID)"></div>
+                <button class="btn btn-success" onclick="joinTeamMember()">টিমে জয়েন করুন</button>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="closeJoin()" style="margin-top:10px;">বাতিল করুন</button>
+        </div>
+    </div>
+    
+    <!-- TEAM CODE MODAL -->
+    <div id="team-code-modal" class="hidden modal">
+        <div class="modal-content" style="text-align:center;">
+            <i class="fas fa-check-circle fa-3x" style="color:var(--success); margin-bottom:15px;"></i>
+            <h3 style="color:#fff;">সফলভাবে তৈরি হয়েছে!</h3>
+            <p style="color:#aaa; margin-top:5px; font-size:0.9rem;">নিচের কোডটি আপনার টিমমেটদের দিন:</p>
+            <div class="cred-panel" style="margin:20px 0;">
+                <div class="cred-box" style="justify-content:center; gap:10px; background:transparent; border:none; padding:0;">
+                    <span id="gen-team-code" class="cred-value" style="font-size:1.6rem; color:var(--success);">...</span>
+                    <i class="fas fa-copy" onclick="copyGenCode()" style="cursor:pointer; color:#fff;"></i>
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="closeTeamCodeModal()">ঠিক আছে</button>
+        </div>
+    </div>
+    
+    <!-- INFO MODAL -->
+    <div id="info-modal" class="hidden modal">
+        <div class="modal-content">
+            <h3 style="text-align:center; color:var(--primary); margin-bottom:15px;">ডিটেইলস</h3>
+            <div id="info-text" style="color:#e0e0e0; white-space:pre-wrap; font-size:0.9rem; line-height:1.6; max-height:300px; overflow-y:auto;"></div>
+            <button class="btn btn-secondary" onclick="document.getElementById('info-modal').classList.add('hidden')" style="margin-top:20px;">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <!-- PROOF MODAL -->
+    <div id="proof-modal" class="hidden modal">
+        <div class="modal-content" style="text-align:center;">
+            <h3 style="color:var(--primary); margin-bottom:10px;">প্রুফ জমা দিন</h3>
+            <p style="color:#aaa; font-size:0.9rem; margin-bottom:25px;">আপনার তথ্য কপি হয়েছে। টেলিগ্রাম বটে গিয়ে পেস্ট করুন এবং স্ক্রিনশট দিন।</p>
+            
+            <a id="btn-proof-link" href="#" target="_blank" class="btn btn-primary" style="background:#0088cc; margin-bottom:12px;">
+                <i class="fab fa-telegram-plane"></i> প্রুফ পাঠান (Telegram)
+            </a>
+            
+            <button class="btn btn-secondary" onclick="document.getElementById('proof-modal').classList.add('hidden')">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <!-- JS LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, orderBy, addDoc, increment, arrayUnion, serverTimestamp, writeBatch, onSnapshot, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        
+        // PWA Push Imports
+        import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging.js";
+
+        const firebaseConfig = { apiKey: "AIzaSyAafXkJwyZ5F7Xuax0VktZ9cpqWD4oCvxU", authDomain: "tournament-97743.firebaseapp.com", projectId: "tournament-97743", messagingSenderId: "584797187828", appId: "1:584797187828:web:4c643f83dfd9b700adb8a1" };
+        const app = initializeApp(firebaseConfig); 
+        const auth = getAuth(app); 
+        const db = getFirestore(app);
+        
+        // Initialize Messaging
+        const messaging = getMessaging(app);
+
+        // --- DEFAULT AVATAR LIST ---
+        const defaultAvatars = [
+            "https://i.pinimg.com/736x/5c/84/42/5c84428d983d26ce85a84f946e4ce8ab.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyAcF57Bqp8agckepgWzFwV0xBxe2gDcbChteoaL41YzUUL62kxx3hvsU&s=10",
+            "https://w0.peakpx.com/wallpaper/264/475/HD-wallpaper-profile-pic-girl-profile-thumbnail.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy3WjPE0K2GQYxbNrMNm83QolhuPiom4owlQkhi7f66XXxnAHXBatc3JY&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7TR-91MtVx3Zyg4mVGvbMchzouv9ajRiXeYEKWDmhRobPcNmPsT3Dhu8&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToqJSrJs571Mn_CaYsV0M6pYVz3p5ygUPbEsR5wuZojA&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy8-AqEVRQZDvyiWLka_22hAn2tyosADPj3o1gHV2_aQ&s=10",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSysX8k1gABg8LHF0QSukobgjnwgnxqX1Pqjcxx6AafbTLSGRq8560Mz8I&s=10"
+        ];
+
+        let currentUserData = null;
+        let sliderInterval = null;
+        let nivaRate = 10;
+        let payeerRate = 115;
+        let proofBotUrl = "";
+        let selMatch = null;
+        let allTournaments = [];
+        let joinedMatchIds = new Set();
+        let spinProcessing = false;
+        let currentRotation = 0;
+        let lastBackPress = 0;
+        let minW = 50; let maxW = 10000;
+        let currentHomeTab = 'BR';
+        let deferredPrompt; 
+
+        window.showToast = (msg) => { const t = document.getElementById('toast-box'); if(t) { t.innerHTML = `<i class="fas fa-info-circle"></i> ${msg}`; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); } else { alert(msg); } };
+        
+        // OPTIMIZED NAV
+        window.nav = (pid) => { 
+            if(sliderInterval && pid !== 'page-home') { clearInterval(sliderInterval); sliderInterval = null; }
+            if(pid === 'page-home' && !sliderInterval) loadHomeData(); 
+            document.querySelectorAll('.page-section').forEach(e => e.classList.remove('active')); 
+            const target = document.getElementById(pid); 
+            if(target) target.classList.add('active'); 
+            if(document.querySelector('.drawer').style.transform === 'translateX(0px)') window.toggleDrawer(); 
+            if (pid === 'page-home') { history.pushState({page: 'home'}, '', '#home'); } else { history.pushState({page: pid}, '', '#' + pid.replace('page-', '')); } window.scrollTo(0,0); 
+        };
+
+        window.selectMethod = (el) => { document.querySelectorAll('.method-card').forEach(c => c.classList.remove('active')); el.classList.add('active'); el.querySelector('input').checked = true; window.calcConversion(); }
+        window.toggleAuth = () => { document.getElementById('login-form').classList.toggle('hidden'); document.getElementById('signup-form').classList.toggle('hidden'); };
+        window.toggleDrawer = () => { const d=document.querySelector('.drawer'), o=document.querySelector('.drawer-overlay'); if(d.style.transform==='translateX(0px)'){d.style.transform='translateX(-100%)';o.style.display='none';}else{d.style.transform='translateX(0px)';o.style.display='block';} };
+        window.closeModal = () => document.getElementById('modal-area').classList.add('hidden');
+        window.closeJoin = () => document.getElementById('join-modal').classList.add('hidden');
+        window.copyToClipboard = (t) => { if(navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(t).then(()=>showToast("কপি করা হয়েছে!")).catch(err=>console.error(err)); } else { let textArea = document.createElement("textarea"); textArea.value = t; document.body.appendChild(textArea); textArea.select(); document.execCommand("Copy"); textArea.remove(); showToast("কপি করা হয়েছে!"); } };
+        window.copyGenCode = () => { const code = document.getElementById('gen-team-code').innerText; window.copyToClipboard(code); }
+        window.copyCustomId = () => { if(currentUserData && currentUserData.customId) { window.copyToClipboard(currentUserData.customId); } }
+        window.copyReferCode = () => { if(currentUserData && currentUserData.referralCode) { window.copyToClipboard(currentUserData.referralCode); } }
+        window.closeTeamCodeModal = () => { document.getElementById('team-code-modal').classList.add('hidden'); nav('page-matches'); }
+
+        // ✅ FIX 2: INSTANT APP VS BROWSER DETECTION & LOADER HIDING
+        // This runs instantly when the script is parsed
+        const initAppDisplay = () => {
+            const isPwa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            if (!isPwa) {
+                // Browser: Hide Loader immediately, Show Install
+                const loader = document.getElementById('loading-overlay');
+                if(loader) loader.style.display = 'none';
+                document.getElementById('install-view').classList.remove('hidden');
+                document.getElementById('auth-container').classList.add('hidden');
+                document.getElementById('app-container').classList.add('hidden');
+            } else {
+                // PWA: Keep loader visible until Auth Check finishes
+                document.getElementById('install-view').classList.add('hidden');
+            }
+        };
+        initAppDisplay(); // Call immediately
+
+        // ✅ FIX 1: SAFE EVENT LISTENERS
+        // Wait for DOM to be fully ready before attaching events
+        document.addEventListener('DOMContentLoaded', () => {
+            const installBtn = document.getElementById('btn-install-app');
+            if (installBtn) {
+                installBtn.addEventListener('click', async () => {
+                    if (deferredPrompt) {
+                        deferredPrompt.prompt();
+                        const { outcome } = await deferredPrompt.userChoice;
+                        deferredPrompt = null;
+                    } else {
+                        alert("To install: Tap Share -> Add to Home Screen");
+                    }
+                });
+            }
+        });
+
+        window.addEventListener('popstate', (event) => { const activeSection = document.querySelector('.page-section.active'); if (activeSection && activeSection.id !== 'page-home') { nav('page-home'); } else { const now = new Date().getTime(); if (now - lastBackPress < 2000) { if(confirm("আপনি কি অ্যাপটি বন্ধ করতে চান?")) { history.back(); } else { history.pushState({page: 'home'}, '', '#home'); } } else { lastBackPress = now; showToast("বাহির হতে আবার ব্যাক চাপুন"); history.pushState({page: 'home'}, '', '#home'); } } });
+
+        // --- PWA INSTALL LOGIC ---
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const isPwa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+            if (!isPwa) {
+                document.getElementById('install-view').classList.remove('hidden');
+                document.getElementById('auth-container').classList.add('hidden');
+            }
+        });
+
+
+        // ==========================================
+        // 🟢 PWA & SYSTEM NOTIFICATION LOGIC (UNCHANGED)
+        // ==========================================
+
+        let swRegistration = null;
+
+        if ('serviceWorker' in navigator) {
+            try {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((reg) => {
+                        console.log('✅ Service Worker Registered:', reg);
+                        swRegistration = reg;
+                    })
+                    .catch((err) => {
+                        console.log('❌ Service Worker Failed', err);
+                    });
+            } catch (e) {
+                console.log('SW Registration Exception:', e);
+            }
+        }
+
+        function checkNotificationPermission(uid) {
+            if ("Notification" in window) {
+                if (Notification.permission === "granted") {
+                    document.getElementById('notification-banner').style.display = 'none';
+                    generateToken(uid);
+                } else {
+                    document.getElementById('notification-banner').style.display = 'block';
+                }
+            }
+        }
+
+        window.enableNotifications = async () => {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+                document.getElementById('notification-banner').style.display = 'none';
+                showToast("Notifications Enabled!");
+                if (auth.currentUser) {
+                    generateToken(auth.currentUser.uid);
+                }
+            } else {
+                alert("Permission Denied. Please enable notifications in your browser settings.");
+            }
+        };
+
+        async function generateToken(uid) {
+            try {
+                if ('serviceWorker' in navigator) {
+                    const registration = await navigator.serviceWorker.ready;
+                    const currentToken = await getToken(messaging, { 
+                        vapidKey: 'BKVqRDof4xyE2oZWEvMO3CSEsCQ9QPkbiT59bnJHQLWJ0ngm5I1pirwwTsNQ94AVR3fuWNeV6WPwhi5f5hsUFyQ',
+                        serviceWorkerRegistration: registration
+                    });
+
+                    if (currentToken) {
+                        console.log('✅ FCM Token Generated (Silent Save)');
+                        await setDoc(doc(db, "users", uid), { fcmToken: currentToken }, { merge: true });
+                    }
+                }
+            } catch (err) {
+                console.log('Token generation failed: ', err);
+                if(err.message && err.message.includes('registration')) {
+                   setTimeout(() => generateToken(uid), 2000);
+                }
+            }
+        }
+
+        function sendSystemNotification(title, body) {
+            if (Notification.permission === "granted" && 'serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(registration => {
+                    registration.showNotification(title, {
+                        body: body,
+                        icon: 'https://cdn-icons-png.flaticon.com/512/3233/3233483.png',
+                        vibrate: [200, 100, 200],
+                        tag: 'gzone-notification'
+                    });
+                });
+            }
+        }
+        
+        const sessionStartTime = Date.now();
+
+
+        // --- MAIN APP LOGIC START ---
+
+        onAuthStateChanged(auth, async (user) => {
+            // Check Mode: PWA vs Browser
+            const isPwa = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+            // Strict Logic: If Browser, STOP here. 
+            // The "initAppDisplay" function already handled the hiding/showing.
+            if (!isPwa) return;
+
+            if(user) {
+                if (window.AppInventor) { window.AppInventor.setWebViewString(user.uid); }
+                checkNotificationPermission(user.uid);
+                loadNotifications(user.uid);
+
+                onSnapshot(doc(db,"users",user.uid), async d => {
+                    if(d.exists()){
+                        currentUserData = d.data();
+                        if(currentUserData.isBlocked) { alert("Blocked by Admin"); signOut(auth); return; }
+                        
+                        if(!currentUserData.photoURL) {
+                            const rand = defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
+                            await setDoc(doc(db, "users", user.uid), { photoURL: rand }, { merge: true });
+                            currentUserData.photoURL = rand; 
+                        }
+                        
+                        if(!currentUserData.referralCode) {
+                             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                             const code = Array(4).fill(0).map(()=>chars[Math.floor(Math.random()*chars.length)]).join('') + Math.floor(100 + Math.random() * 900);
+                             await setDoc(doc(db, "users", user.uid), { referralCode: code, totalRefers: 0, referEarn: 0 }, { merge: true });
+                        }
+                        if(!currentUserData.customId) {
+                             const newId = Math.floor(10000000000 + Math.random() * 90000000000).toString();
+                             await setDoc(doc(db, "users", user.uid), { customId: newId }, { merge: true }); return; 
+                        }
+                        
+                        const balEl = document.getElementById('header-bal'); if(balEl) balEl.innerText = currentUserData.balance || 0;
+                        const nameEl = document.getElementById('p-name'); if(nameEl) nameEl.innerText = currentUserData.fullName || currentUserData.username || "Gamer";
+                        const idEl = document.getElementById('p-custom-id'); if(idEl) idEl.innerText = currentUserData.customId;
+                        
+                        const dName = document.getElementById('d-name'); if(dName) dName.innerText = currentUserData.fullName || "Gamer";
+                        const dUid = document.getElementById('d-uid'); if(dUid) dUid.innerText = "ID: " + currentUserData.customId;
+                        const dPic = document.getElementById('d-pic'); if(dPic) dPic.src = currentUserData.photoURL || "https://via.placeholder.com/100";
+
+                        document.getElementById('my-refer-code').innerText = currentUserData.referralCode || "...";
+                        document.getElementById('total-refers').innerText = currentUserData.totalRefers || 0;
+                        document.getElementById('total-refer-earn').innerText = `৳${currentUserData.referEarn || 0}`;
+                        const imgEl = document.getElementById('p-pic'); if(imgEl) { imgEl.src = currentUserData.photoURL || "https://via.placeholder.com/100"; imgEl.onerror = function() { this.src = "https://via.placeholder.com/100"; }; }
+                        document.getElementById('auth-container').classList.add('hidden'); document.getElementById('app-container').classList.remove('hidden'); document.getElementById('loading-overlay').classList.add('hidden');
+                    } else { await signOut(auth); window.location.reload(); }
+                });
+                loadHomeData(); 
+                window.loadPublicCoupons(); loadWithdrawHistory(user.uid); loadConfig(); loadBroadcasts(); loadBalanceLeaderboard(); loadReferralLeaderboard();
+            } else { document.getElementById('app-container').classList.add('hidden'); document.getElementById('auth-container').classList.remove('hidden'); document.getElementById('loading-overlay').classList.add('hidden'); joinedMatchIds.clear(); }
+        });
+        
+        window.login=async()=>{try{await signInWithEmailAndPassword(auth, document.getElementById('l-email').value, document.getElementById('l-pass').value);}catch(e){showToast("Invalid Credentials")}};
+        
+        window.register=async()=>{
+            try {
+                const fullName = document.getElementById('r-user').value; const email = document.getElementById('r-email').value; const pass = document.getElementById('r-pass').value; const referByCode = document.getElementById('r-refer').value.trim();
+                if(!fullName || !email || !pass) return showToast("Fill all fields");
+                
+                const generatedId = Math.floor(10000000000 + Math.random() * 90000000000).toString();
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const myReferCode = Array(4).fill(0).map(()=>chars[Math.floor(Math.random()*chars.length)]).join('') + Math.floor(100 + Math.random() * 900);
+                
+                const randomPic = defaultAvatars[Math.floor(Math.random() * defaultAvatars.length)];
+
+                let referrerUid = null;
+                if (referByCode) { const q = query(collection(db, "users"), where("referralCode", "==", referByCode)); const snap = await getDocs(q); if (!snap.empty) { referrerUid = snap.docs[0].id; } }
+                
+                const c = await createUserWithEmailAndPassword(auth, email, pass);
+                
+                const userData = { 
+                    fullName: fullName, 
+                    username: fullName, 
+                    email: email, 
+                    balance: 0, 
+                    uid: c.user.uid, 
+                    customId: generatedId, 
+                    referralCode: myReferCode, 
+                    totalRefers: 0, 
+                    referEarn: 0, 
+                    photoURL: randomPic, 
+                    createdAt: serverTimestamp() 
+                };
+                
+                if(referrerUid) { userData.referredBy = referrerUid; userData.referBonusPending = true; }
+                await setDoc(doc(db, "users", c.user.uid), userData); showToast("Success!");
+            } catch(e){ showToast(e.message); }
+        };
+
+        window.logout = () => { if (window.AppInventor) { window.AppInventor.setWebViewString("LOGOUT"); } signOut(auth); };
+
+        function loadConfig() {
+            onSnapshot(doc(db,"config","settings"), s=>{ 
+                if(s.exists()){ 
+                    const d=s.data(); 
+                    nivaRate=d.nivaCoinPrice||10; 
+                    payeerRate = d.payeerRate || 115; 
+                    proofBotUrl = d.telegramProof || d.telegramSupport; 
+                    
+                    minW = d.minWithdraw || 50; maxW = d.maxWithdraw || 10000;
+                    if(document.getElementById('w-limit-text')) document.getElementById('w-limit-text').innerText = `সর্বনিম্ন ৳${minW} - সর্বোচ্চ ৳${maxW}`;
+                    if(document.getElementById('niva-rate-disp')) document.getElementById('niva-rate-disp').innerText=`1000=${nivaRate}TK`;
+                    if(document.getElementById('payeer-rate-disp')) document.getElementById('payeer-rate-disp').innerText = payeerRate; 
+
+                    if(document.getElementById('method-bkash')) document.getElementById('method-bkash').style.display = d.methodBkash !== false ? 'flex' : 'none';
+                    if(document.getElementById('method-nagad')) document.getElementById('method-nagad').style.display = d.methodNagad !== false ? 'flex' : 'none';
+                    if(document.getElementById('method-niva')) document.getElementById('method-niva').style.display = d.methodNiva !== false ? 'flex' : 'none';
+                    if(document.getElementById('method-payeer')) document.getElementById('method-payeer').style.display = d.methodPayeer !== false ? 'flex' : 'none';
+
+                    const spinItem = document.getElementById('nav-spin-item'); if(spinItem) { if(d.methodSpinWheel === false) { spinItem.style.display = 'none'; if(document.getElementById('page-spin').classList.contains('active')) nav('page-home'); } else { spinItem.style.display = 'flex'; } }
+                    
+                    const adminBtn = document.getElementById('btn-admin-support');
+                    if(adminBtn && d.telegramSupport) { adminBtn.href = d.telegramSupport; adminBtn.classList.remove('hidden'); }
+                    
+                    const proofBtn = document.getElementById('btn-proof-link');
+                    if(proofBtn && proofBotUrl) proofBtn.href = proofBotUrl;
+                } 
+            });
+        }
+        
+        window.sendMoney = async () => {
+            const targetId = document.getElementById('tf-id').value.trim(); const amount = Number(document.getElementById('tf-amount').value);
+            if(!targetId || !amount || amount <= 0) return showToast("সঠিক তথ্য দিন"); if(amount > currentUserData.balance) return showToast("ব্যালেন্স নেই"); if(targetId === currentUserData.customId) return showToast("নিজেকে পাঠানো যাবে না");
+            const btn = document.getElementById('btn-transfer'); btn.disabled = true; btn.innerText = "Processing...";
+            try {
+                const q = query(collection(db, "users"), where("customId", "==", targetId)); const querySnapshot = await getDocs(q); if(querySnapshot.empty) { throw new Error("User Not Found (ভুল আইডি)"); }
+                const receiverDoc = querySnapshot.docs[0]; const receiverData = receiverDoc.data();
+                const batch = writeBatch(db);
+                batch.update(doc(db, "users", auth.currentUser.uid), { balance: increment(-amount) });
+                batch.update(doc(db, "users", receiverDoc.id), { balance: increment(amount) });
+                batch.set(doc(collection(db, "notifications")), { targetUid: auth.currentUser.uid, title: "Sent Money", body: `Sent ৳${amount} to ${receiverData.fullName} (${targetId})`, createdAt: serverTimestamp(), read: false });
+                batch.set(doc(collection(db, "notifications")), { targetUid: receiverDoc.id, title: "Received Money", body: `Received ৳${amount} from ${currentUserData.fullName} (${currentUserData.customId})`, createdAt: serverTimestamp(), read: false });
+                await batch.commit(); showToast("টাকা পাঠানো হয়েছে!"); document.getElementById('tf-id').value = ''; document.getElementById('tf-amount').value = ''; nav('page-home'); 
+            } catch(e) { showToast(e.message); } finally { btn.disabled = false; btn.innerText = "টাকা পাঠান"; }
+        }
+
+        window.switchHomeTab = (tab) => {
+            currentHomeTab = tab;
+            document.querySelectorAll('.home-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(`ht-${tab}`).classList.add('active');
+            renderHomeTournaments();
+        }
+
+        function renderHomeTournaments() {
+            const l = document.getElementById('tournament-list'); 
+            l.innerHTML='';
+            const filtered = allTournaments.filter(d => { const t = d.data(); const cat = t.category || 'BR'; return cat === currentHomeTab; });
+            if(filtered.length === 0) { l.innerHTML = "<p style='text-align:center; color:#aaa; margin-top:20px; font-size:0.9rem;'>কোন ম্যাচ নেই</p>"; return; }
+            filtered.forEach(d=>{
+                const t=d.data();
+                const isJoined = joinedMatchIds.has(d.id);
+                let showFee = t.fee;
+                if(currentUserData && currentUserData.referBonusPending && t.type !== 'Squad') { showFee += 5; }
+                let btn;
+                if(isJoined) { btn = `<button class="btn btn-success" onclick="nav('page-matches')">আইডি পাস</button>`; } else if(t.joined >= t.total) { btn = `<button class="btn btn-secondary" disabled>FULL</button>`; } else { btn = `<button class="btn btn-primary" onclick="openJoin('${d.id}','${t.type}',${t.fee})">জয়েন (${t.type})</button>`; }
+                const percent = Math.min((t.joined/t.total)*100, 100);
+                let dateDisplay = t.date;
+                
+                // --- UX FIX: Replaced Icon with "View Details" button ---
+                l.innerHTML += `
+                <div class="t-card">
+                    <div class="t-img-wrap"><img src="${t.image}" class="t-img" loading="lazy"><div class="t-type-badge">${t.type}</div><div class="t-overlay"><div class="t-title">${t.title}</div></div></div>
+                    <div class="t-body">
+                        <div class="t-stats-grid">
+                            <div class="t-stat"><small>এন্ট্রি ফি</small><b>৳${showFee}</b></div>
+                            <div class="t-stat"><small>বাকি আছে</small><b>${t.total-t.joined}</b></div>
+                            <div class="t-stat"><small>সময়</small><b>${dateDisplay}</b></div>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:${percent}%;"></div></div>
+                        <div class="t-actions">${btn}<button class="btn btn-secondary" onclick="showInfo('${(t.extraDetails||'').replace(/'/g,"\\'").replace(/\n/g,'<br>')}')">View Details</button></div>
+                    </div>
+                </div>`;
+            });
+        }
+
+        // OPTIMIZED SLIDER: Smooth scroll fix
+        function loadHomeData() {
+            onSnapshot(collection(db,"sliders"), s=>{ 
+                const c=document.getElementById('banner-slider'); 
+                c.innerHTML=''; 
+                s.forEach(d=>{c.innerHTML+=`<img src="${d.data().url}" class="slide" loading="lazy">`}); 
+                
+                if(sliderInterval) clearInterval(sliderInterval); 
+                if(s.size > 1) {
+                    sliderInterval=setInterval(()=>{
+                        // Fix for glitchy scrolling: Calculate precise scroll amount including gap
+                        if(c.scrollLeft + c.offsetWidth >= c.scrollWidth - 10) { 
+                            c.scrollTo({left: 0, behavior: 'smooth'}); 
+                        } else { 
+                            c.scrollBy({left: c.offsetWidth + 12, behavior: 'smooth'}); // +12 accounts for gap
+                        }
+                    }, 4000); 
+                }
+            });
+            onSnapshot(query(collection(db,"tournaments"), orderBy("date","asc")), s=>{ allTournaments = s.docs; renderHomeTournaments(); });
+        }
+
+        function loadBalanceLeaderboard() { const q = query(collection(db, "users"), orderBy("balance", "desc"), limit(10)); onSnapshot(q, (s) => { const l = document.getElementById('balance-leaderboard'); if (s.empty) { l.innerHTML = "<p style='text-align:center;color:#aaa'>Empty</p>"; return; } l.innerHTML = s.docs.map((d, i) => { const u = d.data(); const rank = i + 1; let rankClass = rank <= 3 ? `top-${rank}` : ''; return `<div class="rank-item ${rankClass}"><div class="rank-left"><span class="rank-pos">#${rank}</span><div style="font-weight:bold; color:#fff;">${u.fullName || u.username}</div></div><div style="color:var(--success); font-weight:bold;">৳${u.balance}</div></div>`; }).join(''); }); }
+        function loadReferralLeaderboard() { const q = query(collection(db, "users"), orderBy("totalRefers", "desc"), limit(5)); onSnapshot(q, (s) => { const l = document.getElementById('referral-leaderboard'); if (s.empty) { l.innerHTML = "<p style='text-align:center;color:#aaa'>Empty</p>"; return; } l.innerHTML = s.docs.map((d, i) => `<div class="rank-item"><div class="rank-left"><span class="rank-pos">#${i+1}</span><div style="color:#fff;">${d.data().fullName || d.data().username}</div></div><div style="color:var(--warning); font-weight:bold;">${d.data().totalRefers} Refers</div></div>`).join(''); }); }
+
+        window.spinWheel = async () => {
+            if(spinProcessing) return;
+            const amtInput = document.getElementById('spin-amt'); const amt = parseInt(amtInput.value); const wheel = document.getElementById('spin-wheel');
+            if(!amt || amt < 1) return showToast("সঠিক পরিমাণ লিখুন"); if(amt > currentUserData.balance) return showToast("ব্যালেন্স নেই");
+            spinProcessing = true; document.getElementById('spin-btn').disabled = true;
+            try { await updateDoc(doc(db, "users", auth.currentUser.uid), { balance: increment(-amt) }); } catch(e) { showToast("Server Error"); spinProcessing = false; document.getElementById('spin-btn').disabled = false; return; }
+            const durationSec = 5 + Math.random() * 5; const durationMs = durationSec * 1000;
+            wheel.style.transition = `transform ${durationSec}s cubic-bezier(0.25, 0.1, 0.25, 1)`;
+            const spins = 8; const degreesPerSpin = 360;
+            let targetAngleFromTop = 10 + Math.random() * 70; const finalAngleRelToCircle = 360 - targetAngleFromTop;
+            let currentMod = currentRotation % 360; if(currentMod < 0) currentMod += 360; 
+            let addedRotation = (spins * degreesPerSpin) + (finalAngleRelToCircle - currentMod);
+            if (addedRotation < degreesPerSpin) addedRotation += degreesPerSpin;
+            currentRotation += addedRotation;
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+            setTimeout(async () => { showToast(`দুঃখিত! আপনি ${amt} টাকা হেরেছেন।`); spinProcessing = false; document.getElementById('spin-btn').disabled = false; }, durationMs + 100); 
+        }
+
+        window.openJoin = (id, type, fee) => {
+            selMatch = {id, type, fee};
+            document.getElementById('join-modal').classList.remove('hidden');
+            let displayFee = fee; if (type !== 'Squad' && currentUserData.referBonusPending) { displayFee += 5; }
+            document.getElementById('j-fee').innerText = `৳${displayFee}`;
+            if(type==='Squad') { document.getElementById('squad-tabs').classList.remove('hidden'); document.getElementById('squad-inputs').classList.remove('hidden'); switchTab('create'); } else { document.getElementById('squad-tabs').classList.add('hidden'); document.getElementById('squad-inputs').classList.add('hidden'); document.getElementById('view-create').classList.remove('hidden'); document.getElementById('view-join').classList.add('hidden'); }
+        }
+        window.switchTab = (t) => { document.querySelectorAll('.sq-tab').forEach(e=>e.classList.remove('active')); document.getElementById('tab-'+t).classList.add('active'); if(t==='create'){document.getElementById('view-create').classList.remove('hidden'); document.getElementById('view-join').classList.add('hidden');} else{document.getElementById('view-create').classList.add('hidden'); document.getElementById('view-join').classList.remove('hidden');} }
+
+        window.confirmJoin = async() => {
+            const uid=document.getElementById('j-uid').value; if(!uid)return showToast("Enter UID");
+            const btn = document.getElementById('btn-conf'); btn.disabled = true; btn.innerText = "Processing...";
+            try {
+                const checkJoin = await getDoc(doc(db, `users/${auth.currentUser.uid}/matches/${selMatch.id}`)); if(checkJoin.exists()) throw new Error("Already Joined!");
+                let totalFee = selMatch.fee; let isReferralPay = false;
+                if(selMatch.type !== 'Squad' && currentUserData.referBonusPending) { totalFee += 5; isReferralPay = true; }
+                const uRef=doc(db,"users",auth.currentUser.uid), tRef=doc(db,"tournaments",selMatch.id);
+                const uSnap=await getDoc(uRef); if(uSnap.data().balance < totalFee) throw new Error("Insufficient Balance");
+                const b=writeBatch(db); b.update(uRef,{balance:increment(-totalFee)}); b.update(tRef,{joined:increment(1)});
+                if(isReferralPay && currentUserData.referredBy) { b.update(uRef, { referBonusPending: false }); b.update(doc(db, "users", currentUserData.referredBy), { balance: increment(5), totalRefers: increment(1), referEarn: increment(5) }); b.set(doc(collection(db, "notifications")), { targetUid: currentUserData.referredBy, title: "Referral Bonus", body: `You earned ৳5 from referring ${currentUserData.fullName}`, createdAt: serverTimestamp(), read: false }); }
+                if(selMatch.type==='Squad'){
+                    const teamName = document.getElementById('j-team').value; if(!teamName) throw new Error("Enter Team Name");
+                    const randomCode = Math.floor(10000 + Math.random() * 90000); const joinCode = teamName.replace(/\s+/g, '') + randomCode;
+                    const tm=doc(collection(db,`tournaments/${selMatch.id}/teams`));
+                    b.set(tm,{teamName, joinCode, leaderUid:auth.currentUser.uid, leaderName:uSnap.data().username, members:[{uid:auth.currentUser.uid, name:uSnap.data().username, role:'leader', gameUid:uid}]});
+                    b.set(doc(db,`users/${auth.currentUser.uid}/matches/${selMatch.id}`),{tourneyId:selMatch.id, type:'squad', role:'leader', teamId:tm.id});
+                    b.set(doc(db,`tournaments/${selMatch.id}/participants/${auth.currentUser.uid}`),{uid:auth.currentUser.uid, username:uSnap.data().username, ffUid:uid});
+                    await b.commit(); closeJoin(); document.getElementById('gen-team-code').innerText = joinCode; document.getElementById('team-code-modal').classList.remove('hidden');
+                } else {
+                    b.set(doc(db,`users/${auth.currentUser.uid}/matches/${selMatch.id}`),{tourneyId:selMatch.id, type:'solo'});
+                    b.set(doc(db,`tournaments/${selMatch.id}/participants/${auth.currentUser.uid}`),{uid:auth.currentUser.uid, username:uSnap.data().username, ffUid:uid});
+                    await b.commit(); showToast("Joined Successfully!"); closeJoin(); nav('page-matches');
+                }
+            } catch(e){showToast(e.message); btn.disabled = false; btn.innerText = "Confirm";}
+        }
+
+        window.joinTeamMember = async() => {
+            const code=document.getElementById('m-code').value, uid=document.getElementById('m-uid').value; if(!code || !uid) return showToast("Fill all");
+            const checkJoin = await getDoc(doc(db, `users/${auth.currentUser.uid}/matches/${selMatch.id}`)); if(checkJoin.exists()) return showToast("Already Joined!");
+            const q=query(collection(db,`tournaments/${selMatch.id}/teams`), where("joinCode","==",code)); const s=await getDocs(q); if(s.empty) return showToast("Invalid Team Code");
+            const tm=s.docs[0]; if(tm.data().members.length>=4) return showToast("Team Full");
+            const b=writeBatch(db); const name = (await getDoc(doc(db,"users",auth.currentUser.uid))).data().username;
+            b.update(tm.ref,{members:arrayUnion({uid:auth.currentUser.uid, name:name, role:'member', gameUid:uid})});
+            b.set(doc(db,`users/${auth.currentUser.uid}/matches/${selMatch.id}`),{tourneyId:selMatch.id, type:'squad', role:'member', teamId:tm.id});
+            b.set(doc(db,`tournaments/${selMatch.id}/participants/${auth.currentUser.uid}`),{uid:auth.currentUser.uid, username:name, ffUid:uid});
+            await b.commit(); showToast("Joined!"); closeJoin(); nav('page-matches');
+        }
+        window.leave = async(tid, tmid) => { if(!confirm("Leave?")) return; const tmRef=doc(db,`tournaments/${tid}/teams`, tmid); const s=await getDoc(tmRef); const mems=s.data().members.filter(m=>m.uid!==auth.currentUser.uid); const b=writeBatch(db); b.update(tmRef,{members:mems}); b.delete(doc(db,`users/${auth.currentUser.uid}/matches/${tid}`)); b.delete(doc(db,`tournaments/${tid}/participants/${auth.currentUser.uid}`)); await b.commit(); }
+        
+        function loadMyMatches(uid) {
+            onSnapshot(collection(db, `users/${uid}/matches`), async (s) => {
+                joinedMatchIds.clear(); s.forEach(d => joinedMatchIds.add(d.data().tourneyId)); renderHomeTournaments();
+                const l = document.getElementById('my-matches-list'); if(s.empty) { l.innerHTML="<p style='text-align:center;color:#aaa;padding:20px;'>No matches joined</p>"; return; }
+                const htmls = await Promise.all(s.docs.map(async d=>{
+                    const m=d.data(); return new Promise(async resolve => {
+                        const tSnap = await getDoc(doc(db,"tournaments",m.tourneyId));
+                        if(!tSnap.exists()) { resolve(`<div class="t-card" style="border-color:red;padding:15px;text-align:center;">Match Removed</div>`); return; }
+                        const t = tSnap.data(); let extra = ""; let myGameUid = "N/A";
+
+                        if(m.type==='squad'){ 
+                            const tmSnap = await getDoc(doc(db,`tournaments/${m.tourneyId}/teams`, m.teamId)); 
+                            if(tmSnap.exists()){ 
+                                const tm = tmSnap.data(); 
+                                const myMem = tm.members.find(mem => mem.uid === uid);
+                                if(myMem) myGameUid = myMem.gameUid;
+                                extra = `<div style="background:rgba(255,255,255,0.05);padding:10px;border-radius:8px;margin-top:10px;font-size:0.9rem;">${m.role==='leader'?`<div style="background:rgba(255,204,0,0.1);color:#fbbf24;padding:5px;text-align:center;border:1px dashed #fbbf24;margin-bottom:5px;border-radius:6px;">CODE: ${tm.joinCode}</div>`:''}<div>${tm.members.map(x=>`<div>${x.name} ${x.role==='leader'?'(L)':''}</div>`).join('')}</div>${m.role!=='leader'?`<button class="btn btn-danger" style="margin-top:5px;padding:5px;font-size:0.8rem" onclick="leave('${m.tourneyId}','${m.teamId}')">Leave</button>`:''}</div>`; 
+                            } 
+                        } else {
+                            const pSnap = await getDoc(doc(db, `tournaments/${m.tourneyId}/participants/${uid}`));
+                            if(pSnap.exists()) myGameUid = pSnap.data().ffUid;
+                        }
+
+                        const showRoomId = m.privateRoomId || t.roomId; const showPassword = m.privatePassword || t.password;
+                        let creds = `<div style="padding:12px;text-align:center;color:#aaa;border:1px dashed var(--glass-border);margin-top:10px;border-radius:8px;font-size:0.85rem;">রুম আইডি এবং পাসওয়ার্ড এর জন্য অপেক্ষা করুন</div>`;
+                        if(showRoomId && showPassword) { creds = `<div class="cred-panel" style="margin-top:10px;"><div class="cred-box"><span>ID: ${showRoomId}</span> <i class="fas fa-copy" style="color:var(--primary)" onclick="copyToClipboard('${showRoomId}')"></i></div><div class="cred-box"><span>PASS: ${showPassword}</span> <i class="fas fa-copy" style="color:var(--primary)" onclick="copyToClipboard('${showPassword}')"></i></div></div>`; }
+                        
+                        const proofBtn = `<button class="btn btn-primary" style="margin-top:12px; font-size:0.9rem;" onclick="handleProof('${currentUserData.customId}', '${myGameUid}', '${m.tourneyId}')"><i class="fas fa-check-circle"></i> প্রুফ দিন</button>`;
+
+                        resolve(`<div class="t-card"><div class="t-body"><h3 style="color:var(--primary); font-family:var(--font-gaming);">${t.title}</h3><small style="color:${t.status==='ongoing'?'var(--warning)':'#aaa'}">${t.status.toUpperCase()}</small>${extra}${creds}${proofBtn}</div></div>`);
+                    });
+                }));
+                l.innerHTML = htmls.join('');
+            });
+        }
+        
+        window.handleProof = (userId, gameUid, tourneyId) => {
+            const textToCopy = `User ID: ${userId}\nUid: ${gameUid}\nTournament ID: ${tourneyId}`;
+            window.copyToClipboard(textToCopy);
+            document.getElementById('proof-modal').classList.remove('hidden');
+        };
+
+        window.calcConversion = () => { 
+            const amtEl = document.getElementById('w-amt'); 
+            const methodEl = document.querySelector('input[name="w_method"]:checked'); 
+            
+            document.getElementById('niva-calc').style.display='none';
+            document.getElementById('payeer-calc').style.display='none';
+
+            if(methodEl && amtEl && amtEl.value) {
+                if(methodEl.value === 'Niva Coin') {
+                    document.getElementById('niva-calc').style.display='block';
+                    document.getElementById('niva-amount').innerText = Math.floor((amtEl.value / nivaRate)*1000);
+                } else if(methodEl.value === 'Payeer Dollar') {
+                    document.getElementById('payeer-calc').style.display='block';
+                    document.getElementById('payeer-amount').innerText = (amtEl.value / payeerRate).toFixed(2);
+                }
+            } 
+        }
+        
+        document.addEventListener('change', (e) => { if(e.target.name === 'w_method') window.calcConversion(); });
+        
+        window.doWithdraw = async () => {
+            const amtEl = document.getElementById('w-amt'); const numEl = document.getElementById('w-num'); const methodEl = document.querySelector('input[name="w_method"]:checked');
+            if(!methodEl) return showToast("Select Method"); if(!amtEl || !numEl || !amtEl.value || !numEl.value) return showToast("Fill all");
+            const a = Number(amtEl.value); const n = numEl.value; const m = methodEl.value;
+            if(a > currentUserData.balance) return showToast("Low Balance"); if(a < minW) return showToast(`সর্বনিম্ন উইথড্র ৳${minW}`); if(a > maxW) return showToast(`সর্বোচ্চ উইথড্র ৳${maxW}`);
+            const b=writeBatch(db); b.update(doc(db,"users",auth.currentUser.uid),{balance:increment(-a)}); b.set(doc(collection(db,"withdrawals")),{userId:auth.currentUser.uid, username:currentUserData.username, amount:a, number:n, method:m, status:"pending", time:serverTimestamp()});
+            await b.commit(); showToast("Requested"); nav('page-home');
+        }
+        function loadWithdrawHistory(uid){ onSnapshot(query(collection(db,"withdrawals"),where("userId","==",uid)),s=>{ const l = s.docs.sort((a,b)=>(b.data().time?.seconds||0)-(a.data().time?.seconds||0)); document.getElementById('withdraw-history').innerHTML = s.empty ? "<p style='text-align:center;color:#aaa'>No history</p>" : l.map(d=>{ const w=d.data(), c=w.status==='pending'?'var(--warning)':(w.status==='paid'?'var(--success)':'var(--danger)'); return `<div class="t-card" style="padding:15px;display:flex;justify-content:space-between;"><b>৳${w.amount} (${w.method})</b><span style="color:${c};font-weight:bold;">${w.status}</span></div>`; }).join(''); }); }
+        
+        // --- 🟢 NEW NOTIFICATION TRIGGER LOGIC ---
+        function loadNotifications(uid) {
+            const q = query(collection(db, "notifications"), where("targetUid", "==", uid));
+            
+            onSnapshot(q, (s) => {
+                // --- EXISTING UI LOGIC (DO NOT TOUCH) ---
+                const list = s.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+                const unread = list.filter(n=>!n.read).length;
+                
+                const badge = document.getElementById('header-badge');
+                if(badge) badge.style.display = unread ? 'block' : 'none';
+                
+                const nList = document.getElementById('n-list');
+                if(nList) {
+                    nList.innerHTML = list.length ? list.map(n => {
+                        const bg = n.read ? 'var(--glass-bg)' : 'rgba(6, 182, 212, 0.1)';
+                        return `<div class="t-card" style="padding:15px;background:${bg};border-color:${n.read?'var(--glass-border)':'var(--primary)'}"><b style="color:var(--primary)">${n.title}</b><p style="font-size:0.9rem;color:#ddd;margin-top:5px;">${n.body}</p></div>`;
+                    }).join('') : "<p style='text-align:center;color:#aaa'>Empty</p>";
+                }
+                // ----------------------------------------
+
+                // --- 🟢 NEW NOTIFICATION TRIGGER LOGIC ---
+                // This loop checks specifically for NEWLY ADDED documents in this snapshot event
+                s.docChanges().forEach(change => {
+                    if (change.type === "added") {
+                        const data = change.doc.data();
+                        
+                        // Convert Firestore timestamp to milliseconds
+                        const createdTime = data.createdAt ? (data.createdAt.seconds * 1000) : 0;
+
+                        // TRIGGER RULE: 
+                        // 1. Must be unread
+                        // 2. Must be created AFTER the user opened the app (sessionStartTime)
+                        // This prevents spamming 50 notifications when you refresh the page.
+                        if (!data.read && createdTime > sessionStartTime) {
+                            sendSystemNotification(data.title, data.body);
+                        }
+                    }
+                });
+                // ----------------------------------------
+            });
+        }
+
+        window.openNotifications = async () => { nav('page-notifications'); const q = query(collection(db, "notifications"), where("targetUid", "==", auth.currentUser.uid), where("read", "==", false)); const snap = await getDocs(q); const batch = writeBatch(db); snap.forEach(d => batch.update(doc(db, "notifications", d.id), { read: true })); await batch.commit(); };
+        window.loadPublicCoupons = function(){ onSnapshot(query(collection(db,"coupons"),where("type","==","public")),s=>{ document.getElementById('public-coupons').innerHTML = s.empty?"<p style='text-align:center;color:#aaa'>None</p>":s.docs.map(d=>{ const c=d.data(), p=Math.min((c.used/c.max)*100,100); return `<div class="t-card" style="padding:15px; border-left:3px solid var(--success);"><div style="display:flex;justify-content:space-between;margin-bottom:10px;"><b style="font-family:monospace;font-size:1.3rem;letter-spacing:1px;">${c.code}</b><span style="color:var(--success);font-weight:bold;font-size:1.1rem;">+৳${c.bonus}</span></div><div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin-bottom:5px;"><div style="height:100%;width:${p}%;background:var(--success);border-radius:3px;"></div></div><small style="color:var(--text-muted)">${c.used}/${c.max} used</small></div>`; }).join(''); }); }
+        window.redeemCoupon = async () => { const code = document.getElementById('coupon-code').value.trim(); if(!code) return showToast("Enter Code"); try { const q = query(collection(db, "coupons"), where("code", "==", code)); const snap = await getDocs(q); if(snap.empty) throw "Invalid Code"; const docSnap = snap.docs[0]; const data = docSnap.data(); if(data.used >= data.max) throw "Limit Reached"; const redRef = doc(db, `coupons/${docSnap.id}/redemptions/${auth.currentUser.uid}`); const redSnap = await getDoc(redRef); if(redSnap.exists()) throw "Already Used"; const batch = writeBatch(db); batch.update(docSnap.ref, { used: increment(1) }); batch.set(redRef, { redeemedAt: serverTimestamp() }); batch.update(doc(db, "users", auth.currentUser.uid), { balance: increment(data.bonus) }); batch.set(doc(collection(db, "notifications")), { targetUid: auth.currentUser.uid, title: "Redeemed", body: `You got ${data.bonus} TK`, createdAt: serverTimestamp(), read: false }); await batch.commit(); showToast("Success!"); } catch(e) { showToast(e.message || e); } }
+        window.showInfo = (d) => { document.getElementById('info-modal').classList.remove('hidden'); document.getElementById('info-text').innerText=d.replace(/<br>/g,'\n'); };
+        window.updateProfilePic=async()=>{ const u=document.getElementById('new-pic-url').value; if(u) await setDoc(doc(db,"users",auth.currentUser.uid),{photoURL:u},{merge:true}); showToast("Updated"); };
+        window.copyUsername=()=>copyToClipboard(currentUserData.username);
+        function loadBroadcasts() { onSnapshot(collection(db,"videos"), s=>{ document.getElementById('video-list').innerHTML = s.empty ? "<p style='text-align:center;color:#aaa'>No videos</p>" : s.docs.map(d=>`<div class="video-card"><iframe src="${d.data().link}" style="width:100%;height:200px;border:none;"></iframe><div class="video-title">${d.data().title}</div></div>`).join(''); }); }
+    </script>
+</body>
+</html>
